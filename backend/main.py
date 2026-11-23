@@ -1,17 +1,21 @@
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi.middleware.cors import CORSMiddleware
+
 from routers.auth import router as auth_router
 from routers.departments import router as departments_router
-from database import engine
-from security import require_roles
-from fastapi import Depends
 from routers.employees import router as employees_router
 from routers.teams import router as teams_router
 from routers.company import router as company_router
 from routers.audit_logs import router as audit_logs_router
+from routers import attendance
+from routers import leaves
+from routers import performance
+
+from database import engine
+from security import require_roles
 
 
 app = FastAPI(
@@ -19,12 +23,16 @@ app = FastAPI(
     description="Backend API for the ERP Management System",
     version="1.0.0"
 )
+
 app.include_router(auth_router)
 app.include_router(departments_router)
 app.include_router(employees_router)
 app.include_router(teams_router)
 app.include_router(company_router)
 app.include_router(audit_logs_router)
+app.include_router(attendance.router)
+app.include_router(leaves.router)
+app.include_router(performance.router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -63,6 +71,7 @@ def test_database():
             "status": "error",
             "message": "Database connection failed. Check backend logs."
         }
+
 
 @app.get("/admin/dashboard", tags=["Admin"])
 def admin_dashboard(

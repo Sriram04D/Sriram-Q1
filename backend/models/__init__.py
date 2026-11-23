@@ -6,3 +6,6 @@ from .team import Team
 from .team_member import TeamMember
 from .company import Company
 from .audit_log import AuditLog
+from .attendance import Attendance
+from .leave import LeaveRequest
+from .performance import Performance

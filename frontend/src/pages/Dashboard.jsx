@@ -1,9 +1,14 @@
 
 import { useState } from "react";
+
 import CompanyProfile from "./CompanyProfile";
 import Departments from "./Departments";
 import Teams from "./Teams";
 import AuditLogs from "./AuditLogs";
+import Employees from "./Employees";
+import Attendance from "./Attendance";
+import LeaveManagement from "./LeaveManagement";
+import Performance from "./Performance";
 
 export default function Dashboard({ onLogout }) {
   const [activePage, setActivePage] = useState("Dashboard");
@@ -13,6 +18,10 @@ export default function Dashboard({ onLogout }) {
     "Company Profile",
     "Departments",
     "Teams",
+    "Employees",
+    "Attendance",
+    "Leave Management",
+    "Performance",
     "Audit Logs",
   ];
 
@@ -48,28 +57,35 @@ export default function Dashboard({ onLogout }) {
         </header>
 
         <section style={styles.content}>
-  {activePage === "Dashboard" ? (
-    <>
-      <h2>Welcome to Studio Lite ERP</h2>
-      <p>Manage your organization from one place.</p>
-    </>
-  ) : activePage === "Company Profile" ? (
-    <CompanyProfile />
-  ) : activePage === "Departments" ? (
-    <Departments />
-  ) : activePage === "Teams" ? (
-  <Teams />
-  ) : activePage === "Audit Logs" ? (
-  <AuditLogs />
-  ) : (
-    <div style={styles.placeholder}>
-      <h3>{activePage}</h3>
-      <p>This page will be connected next.</p>
-    </div>
-  )}
-</section>
+          {activePage === "Dashboard" ? (
+            <>
+              <h2>Welcome to Studio Lite ERP</h2>
+              <p>Manage your organization from one place.</p>
+            </>
+          ) : activePage === "Company Profile" ? (
+            <CompanyProfile />
+          ) : activePage === "Departments" ? (
+            <Departments />
+          ) : activePage === "Teams" ? (
+            <Teams />
+          ) : activePage === "Employees" ? (
+            <Employees />
+          ) : activePage === "Attendance" ? (
+            <Attendance />
+           ) : activePage === "Leave Management" ? (
+    <LeaveManagement />
+          ) : activePage === "Performance" ? (
+    <Performance />
 
-        
+          ) : activePage === "Audit Logs" ? (
+            <AuditLogs />
+          ) : (
+            <div style={styles.placeholder}>
+              <h3>{activePage}</h3>
+              <p>This page will be connected next.</p>
+            </div>
+          )}
+        </section>
       </main>
     </div>
   );
