@@ -17,6 +17,8 @@ from routers import projects
 from routers import tasks
 from database import engine
 from security import require_roles
+from routers import crm
+
 
 
 app = FastAPI(
@@ -37,6 +39,7 @@ app.include_router(performance.router)
 app.include_router(projects.router)
 app.include_router(milestones.router)
 app.include_router(tasks.router)
+app.include_router(crm.router)
 
 app.add_middleware(
     CORSMiddleware,

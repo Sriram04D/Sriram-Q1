@@ -12,6 +12,7 @@ import Performance from "./Performance";
 import Projects from "./Projects";
 import Milestones from "./Milestones";
 import Tasks from "./Tasks";
+import CRM from "./CRM";
 
 export default function Dashboard({ onLogout }) {
   const [activePage, setActivePage] = useState("Dashboard");
@@ -50,6 +51,7 @@ const canManageTasks = ["Admin", "Project Manager"].includes(role);
     "Milestones",
     "Resources",
     "Tasks",
+    "CRM",
     "Employees",
     "Attendance",
     "Leave Management",
@@ -60,7 +62,9 @@ const canManageTasks = ["Admin", "Project Manager"].includes(role);
   const menuItems =
   role === "Employee"
     ? ["Dashboard", "Tasks"]
-    : allMenuItems;
+    : allMenuItems.filter(
+        (item) => item !== "CRM" || canManageTasks
+      );
 
 if (authError) return <p>{authError}</p>;
 if (!role) return <p>Loading...</p>;
@@ -116,6 +120,8 @@ if (!role) return <p>Loading...</p>;
   <Resources />
           ) : activePage === "Tasks" ? (
   <Tasks canManageTasks={canManageTasks} />
+          ) : activePage === "CRM" && canManageTasks ? (
+  <CRM />
   
           ) : activePage === "Employees" ? (
             <Employees />

@@ -15,3 +15,11 @@ from .milestone import Milestone
 from .project_resource import ProjectResource
 from .task import Task
 from .work_log import WorkLog
+from models.crm import (
+    Client,
+    Lead,
+    ClientCommunication,
+    ClientProject,
+    Proposal,
+    ClientFeedback
+)
