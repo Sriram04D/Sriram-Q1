@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import Resources from "./Resources";
 import CompanyProfile from "./CompanyProfile";
 import Departments from "./Departments";
@@ -11,11 +11,37 @@ import LeaveManagement from "./LeaveManagement";
 import Performance from "./Performance";
 import Projects from "./Projects";
 import Milestones from "./Milestones";
+import Tasks from "./Tasks";
 
 export default function Dashboard({ onLogout }) {
   const [activePage, setActivePage] = useState("Dashboard");
 
-  const menuItems = [
+const [role, setRole] = useState("");
+const [authError, setAuthError] = useState("");
+
+useEffect(() => {
+  const API =
+    import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
+  fetch(`${API}/auth/me`, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+    },
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Unable to load user");
+      return res.json();
+    })
+    .then((data) => {
+      if (!data.role_name) throw new Error("Role not found");
+      setRole(data.role_name);
+    })
+    .catch((err) => setAuthError(err.message));
+}, []);
+
+const canManageTasks = ["Admin", "Project Manager"].includes(role);
+
+  const allMenuItems = [
     "Dashboard",
     "Company Profile",
     "Departments",
@@ -23,12 +49,21 @@ export default function Dashboard({ onLogout }) {
     "Projects",
     "Milestones",
     "Resources",
+    "Tasks",
     "Employees",
     "Attendance",
     "Leave Management",
     "Performance",
     "Audit Logs",
   ];
+
+  const menuItems =
+  role === "Employee"
+    ? ["Dashboard", "Tasks"]
+    : allMenuItems;
+
+if (authError) return <p>{authError}</p>;
+if (!role) return <p>Loading...</p>;
 
   return (
     <div style={styles.layout}>
@@ -58,7 +93,7 @@ export default function Dashboard({ onLogout }) {
       <main style={styles.main}>
         <header style={styles.header}>
           <h2>{activePage}</h2>
-          <span style={styles.adminBadge}>Admin Panel</span>
+          <span style={styles.adminBadge}>{role} Panel</span>
         </header>
 
         <section style={styles.content}>
@@ -79,6 +114,8 @@ export default function Dashboard({ onLogout }) {
   <Milestones />
           ) : activePage === "Resources" ? (
   <Resources />
+          ) : activePage === "Tasks" ? (
+  <Tasks canManageTasks={canManageTasks} />
   
           ) : activePage === "Employees" ? (
             <Employees />
