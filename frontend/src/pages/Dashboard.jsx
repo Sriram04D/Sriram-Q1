@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-
+import Resources from "./Resources";
 import CompanyProfile from "./CompanyProfile";
 import Departments from "./Departments";
 import Teams from "./Teams";
@@ -9,6 +9,8 @@ import Employees from "./Employees";
 import Attendance from "./Attendance";
 import LeaveManagement from "./LeaveManagement";
 import Performance from "./Performance";
+import Projects from "./Projects";
+import Milestones from "./Milestones";
 
 export default function Dashboard({ onLogout }) {
   const [activePage, setActivePage] = useState("Dashboard");
@@ -18,6 +20,9 @@ export default function Dashboard({ onLogout }) {
     "Company Profile",
     "Departments",
     "Teams",
+    "Projects",
+    "Milestones",
+    "Resources",
     "Employees",
     "Attendance",
     "Leave Management",
@@ -68,6 +73,13 @@ export default function Dashboard({ onLogout }) {
             <Departments />
           ) : activePage === "Teams" ? (
             <Teams />
+          ) : activePage === "Projects" ? (
+  <Projects />
+          ) : activePage === "Milestones" ? (
+  <Milestones />
+          ) : activePage === "Resources" ? (
+  <Resources />
+  
           ) : activePage === "Employees" ? (
             <Employees />
           ) : activePage === "Attendance" ? (
@@ -76,7 +88,6 @@ export default function Dashboard({ onLogout }) {
     <LeaveManagement />
           ) : activePage === "Performance" ? (
     <Performance />
-
           ) : activePage === "Audit Logs" ? (
             <AuditLogs />
           ) : (

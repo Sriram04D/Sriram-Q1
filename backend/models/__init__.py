@@ -9,3 +9,7 @@ from .audit_log import AuditLog
 from .attendance import Attendance
 from .leave import LeaveRequest
 from .performance import Performance
+from .project import Project
+from .project_team import ProjectTeam
+from .milestone import Milestone
+from .project_resource import ProjectResource

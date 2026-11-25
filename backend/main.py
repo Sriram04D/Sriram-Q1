@@ -3,7 +3,7 @@ from fastapi import FastAPI, Depends
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi.middleware.cors import CORSMiddleware
-
+from routers import milestones
 from routers.auth import router as auth_router
 from routers.departments import router as departments_router
 from routers.employees import router as employees_router
@@ -13,6 +13,7 @@ from routers.audit_logs import router as audit_logs_router
 from routers import attendance
 from routers import leaves
 from routers import performance
+from routers import projects
 
 from database import engine
 from security import require_roles
@@ -33,6 +34,8 @@ app.include_router(audit_logs_router)
 app.include_router(attendance.router)
 app.include_router(leaves.router)
 app.include_router(performance.router)
+app.include_router(projects.router)
+app.include_router(milestones.router)
 
 app.add_middleware(
     CORSMiddleware,
