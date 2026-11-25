@@ -14,7 +14,7 @@ from routers import attendance
 from routers import leaves
 from routers import performance
 from routers import projects
-
+from routers import tasks
 from database import engine
 from security import require_roles
 
@@ -36,6 +36,7 @@ app.include_router(leaves.router)
 app.include_router(performance.router)
 app.include_router(projects.router)
 app.include_router(milestones.router)
+app.include_router(tasks.router)
 
 app.add_middleware(
     CORSMiddleware,

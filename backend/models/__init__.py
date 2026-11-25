@@ -13,3 +13,5 @@ from .project import Project
 from .project_team import ProjectTeam
 from .milestone import Milestone
 from .project_resource import ProjectResource
+from .task import Task
+from .work_log import WorkLog
