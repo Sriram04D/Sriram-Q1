@@ -18,6 +18,7 @@ from routers import tasks
 from database import engine
 from security import require_roles
 from routers import crm
+from routers import finance
 
 
 
@@ -40,6 +41,7 @@ app.include_router(projects.router)
 app.include_router(milestones.router)
 app.include_router(tasks.router)
 app.include_router(crm.router)
+app.include_router(finance.router)
 
 app.add_middleware(
     CORSMiddleware,

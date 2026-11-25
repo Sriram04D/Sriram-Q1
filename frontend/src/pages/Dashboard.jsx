@@ -13,6 +13,7 @@ import Projects from "./Projects";
 import Milestones from "./Milestones";
 import Tasks from "./Tasks";
 import CRM from "./CRM";
+import Finance from "./Finance";
 
 export default function Dashboard({ onLogout }) {
   const [activePage, setActivePage] = useState("Dashboard");
@@ -41,6 +42,7 @@ useEffect(() => {
 }, []);
 
 const canManageTasks = ["Admin", "Project Manager"].includes(role);
+const canManageFinance = ["Admin", "Finance"].includes(role);
 
   const allMenuItems = [
     "Dashboard",
@@ -52,6 +54,7 @@ const canManageTasks = ["Admin", "Project Manager"].includes(role);
     "Resources",
     "Tasks",
     "CRM",
+    "Finance",
     "Employees",
     "Attendance",
     "Leave Management",
@@ -62,9 +65,13 @@ const canManageTasks = ["Admin", "Project Manager"].includes(role);
   const menuItems =
   role === "Employee"
     ? ["Dashboard", "Tasks"]
-    : allMenuItems.filter(
-        (item) => item !== "CRM" || canManageTasks
-      );
+    : role === "Finance"
+      ? ["Dashboard", "Finance"]
+      : allMenuItems.filter(
+          (item) =>
+            (item !== "CRM" || canManageTasks) &&
+            (item !== "Finance" || canManageFinance)
+        );
 
 if (authError) return <p>{authError}</p>;
 if (!role) return <p>Loading...</p>;
@@ -122,6 +129,8 @@ if (!role) return <p>Loading...</p>;
   <Tasks canManageTasks={canManageTasks} />
           ) : activePage === "CRM" && canManageTasks ? (
   <CRM />
+          ) : activePage === "Finance" && canManageFinance ? (
+  <Finance />
   
           ) : activePage === "Employees" ? (
             <Employees />

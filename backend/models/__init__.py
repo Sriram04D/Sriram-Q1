@@ -23,3 +23,10 @@ from models.crm import (
     Proposal,
     ClientFeedback
 )
+from models.finance import (
+    FinanceTransaction,
+    ProjectBudget,
+    Invoice,
+    Payment,
+    SalaryRecord
+)
